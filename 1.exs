@@ -3,4 +3,7 @@
 # multiples of 3 or 5 below 1000.
 
 multiple_of_n? = fn val, n -> rem(val, n) == 0 end
-1..999 |> Enum.filter(&(multiple_of_n?.(&1, 3) or multiple_of_n?.(&1, 5))) |> Enum.sum
+1..999
+    |> Enum.filter(&(multiple_of_n?.(&1, 3) or multiple_of_n?.(&1, 5)))
+    |> Enum.sum
+    |> IO.puts
