@@ -12,8 +12,8 @@
 # At each step, append to sum_evens if even.
 # Recurse until reaching the maximum value specified.
 defmodule Fibonacci do
-    def even(val) do
-        rem(val, 2) == 0
+    def even?(val) do
+        rem(val, 2) == 0 
     end
 
     # Handle the initial case: just a maximum value.
@@ -32,7 +32,7 @@ defmodule Fibonacci do
         if next_val <= max do
             new_pair = [a: prev_pair[:b], b: next_val]
 
-            if even(next_val), do: sum_evens = sum_evens + next_val
+            if even?(next_val), do: sum_evens = sum_evens + next_val
             sum_fib_evens(new_pair, max, sum_evens)
         else
             sum_evens
