@@ -12,34 +12,41 @@
 # At each step, append to sum_evens if even.
 # Recurse until reaching the maximum value specified.
 defmodule Fibonacci do
-    def even?(val) do
-        rem(val, 2) == 0 
-    end
+  def even?(val) do
+    rem(val, 2) == 0
+  end
 
-    # Handle the initial case: just a maximum value.
-    def sum_fib_evens(max) do
-        prev_pair = [a: 1, b: 2]
-        sum_evens = 2
-        sum_fib_evens(prev_pair, max, sum_evens)
-    end
+  # Handle the initial case: just a maximum value.
+  def sum_fib_evens(max) do
+    prev_pair = [a: 1, b: 2]
+    sum_evens = 2
+    sum_fib_evens(prev_pair, max, sum_evens)
+  end
 
-    # Handle later cases, where the previous pair is known and the sum of
-    # previous even numbers is known as well.
-    def sum_fib_evens(prev_pair, max, sum_evens) do
-        next_val = prev_pair[:a] + prev_pair[:b]
+  # Handle later cases, where the previous pair is known and the sum of
+  # previous even numbers is known as well.
+  def sum_fib_evens(prev_pair, max, sum_evens) do
+    next_val = prev_pair[:a] + prev_pair[:b]
 
-        # Only proceed if this value does not exceed the maximum.
-        if next_val <= max do
-            new_pair = [a: prev_pair[:b], b: next_val]
+    # Only proceed if this value does not exceed the maximum.
+    if next_val <= max do
+      new_pair = [a: prev_pair[:b], b: next_val]
 
-            if even?(next_val), do: sum_evens = sum_evens + next_val
-            sum_fib_evens(new_pair, max, sum_evens)
-        else
-            sum_evens
-        end
-
+      if even?(next_val), do: sum_evens = sum_evens + next_val
+        sum_fib_evens(new_pair, max, sum_evens)
+      else
+        sum_evens
+      end
     end
 end
 
+even? = fn val -> rem(val, 2) == 0 end
 max = 4_000_000
+# TODO: rework using a Stream generation, filter, and sum.
+# <TODO> # Generate Fibonacci stream
+# sum = <Fibonacci>
+#   |> Stream.take_while(&(&1 <= max))
+#   |> Stream.filter(even?)   # Filter for evens
+#   |> Enum.sum               # Sum result
+
 IO.puts(Fibonacci.sum_fib_evens(max))
